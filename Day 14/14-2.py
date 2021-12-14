@@ -33,6 +33,14 @@ def solve(rules, start, itterations):
 def solve2(rules, start, itterations):
     ruleOccurences = {}
     ruleMapping = {}
+    chars = {}
+    length = 0
+    for char in start:
+        length += 1
+        if char in chars:
+            chars[char] += 1
+        else:
+            chars[char] = 1
     for i in range(len(rules)):
             ruleOccurences[i] = 0
             rulePair = rules[i].split()[0]
@@ -43,7 +51,7 @@ def solve2(rules, start, itterations):
     for i in range(len(rules)):
         rulePair = rules[i].split()[0]
         ruleInsert = rules[i].split()[2]
-        ruleOut = rulePair[0] + ruleInsert[0] + rulePair[0]
+        ruleOut = rulePair[0] + ruleInsert[0] + rulePair[1]
         ruleMapping[i] = []
         for j in range(len(rules)):
             rulePair = rules[j].split()[0]
@@ -57,30 +65,33 @@ def solve2(rules, start, itterations):
                     ruleOccurencesTemp[mapped] += ruleOccurences[rule]
                 else:
                     ruleOccurencesTemp[mapped] = ruleOccurences[rule]
-        ruleOccurences = ruleOccurencesTemp.copy()
-    return ruleOccurences
-
-def calcScore(ruleOccurences, rules):
-    chars = {}
-    max = ('a', 0)
-    for rule in ruleOccurences.keys():
-        for char in rules[rule].split()[0]:
-            if char in chars:
-                chars[char] += ruleOccurences[rule]
+            length += ruleOccurences[rule]
+            if rules[rule].split()[2] in chars:
+                chars[rules[rule].split()[2]] += ruleOccurences[rule]
             else:
-                chars[char] = ruleOccurences[rule]
-            if chars[char] > max[1]:
-                max = (char, chars[char])
-    return chars, max
+                chars[rules[rule].split()[2]] = ruleOccurences[rule]
+        ruleOccurences = ruleOccurencesTemp.copy()
+    return chars
+
+def calcScore(chars):
+    max = 0
+    for char in chars:
+        if chars[char] > max:
+            max = chars[char]
+    min = max
+    for char in chars:
+        if chars[char] < min:
+            min = chars[char]
+    return max, min
 
 def __main__():
-    file = "Day 14\est.txt"
+    file = "Day 14/input.txt"
     arr = readFile(file)
     start = arr.pop(0)
     arr.pop(0)
-    ruleOccurences  = solve2(arr, start, 12)
-    chars, max = calcScore(ruleOccurences, arr)
-    print(max)
+    chars  = solve2(arr, start, 40)
+    max, min = calcScore(chars)
+    print(max - min)
 
 
 __main__()
