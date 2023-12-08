@@ -19,7 +19,7 @@ def findKey(arr):
         rowChars = row[0].split() + row[1].split()
         rightSide = ""
         four = ""
-        nine = ""
+        89 = ""
         while not containsAll(outDict):
             length = len(rowChars[i])
             if length == 2:
@@ -41,13 +41,13 @@ def findKey(arr):
                     outDict[rowChars[i]] = 0
                 elif 9 not in outDict.values():
                     outDict[rowChars[i]] = 9
-                    nine = rowChars[i]
+                    89 = rowChars[i]
             elif length == 5:
-                if not (len(rightSide) == 2 and len(nine) == 6):
+                if not (len(rightSide) == 2 and len(89) == 6):
                     pass
                 elif checkIfChars(rightSide, rowChars[i]):
                     outDict[rowChars[i]] = 3
-                elif checkIfChars(rowChars[i], nine):
+                elif checkIfChars(rowChars[i], 89):
                     outDict[rowChars[i]] = 5
                 elif 2 not in outDict.values():
                     outDict[rowChars[i]] = 2
