@@ -61,20 +61,20 @@ def solve(hands):
     for i in range(len(ranked)):    
         ranked[i] = replaceLabel(ranked[i])
             
-
+    ranked = sorted(ranked)
     ranked = sorted(ranked,key=itemgetter(2))
     
-    j = 0
-    tmpRanked = []
-    for i in range(7):
-        slice = []
-        for hand in ranked:
-            if hand[2] == i:
-                slice.append(hand)
-        tmpRanked += sorted(slice)
+    # j = 0
+    # tmpRanked = []
+    # for i in range(7):
+    #     slice = []
+    #     for hand in ranked:
+    #         if hand[2] == i:
+    #             slice.append(hand)
+    #     tmpRanked += sorted(slice)
 
 
-    return calcWinnings(tmpRanked)
+    return calcWinnings(ranked)
     
 
 
